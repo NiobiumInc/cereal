@@ -31,6 +31,8 @@
 
 #include "cereal/cereal.hpp"
 #include <sstream>
+#include <cstring>
+#include <limits>
 
 namespace cereal
 {
@@ -112,9 +114,27 @@ namespace cereal
   // ######################################################################
   // Common BinaryArchive serialization functions
 
+  //! Saving long double to binary through a zeroed buffer (CVE-2020-11104)
+  /*! long double carries uninitialized padding bytes (e.g. 6 bytes on x86-64,
+      where sizeof(long double)==16 but only 10 bytes are significant). Copying
+      the raw object representation would leak that stack/heap padding into the
+      archive. Serialize through a zero-initialized buffer so the padding is
+      deterministic zeros. Value-preserving; loading is unchanged. */
+  template<class T> inline
+  typename std::enable_if<std::is_same<T, long double>::value, void>::type
+  CEREAL_SAVE_FUNCTION_NAME(BinaryOutputArchive & ar, T const & t)
+  {
+    // Copy only the significant bytes; the zeroed buffer keeps any trailing padding
+    // (10 significant bytes for 80-bit x86 extended; all of sizeof for double/quad).
+    const std::size_t significant = (std::numeric_limits<T>::digits == 64) ? 10 : sizeof(T);
+    unsigned char buffer[sizeof(T)] = {};
+    std::memcpy(buffer, std::addressof(t), significant);
+    ar.saveBinary(buffer, sizeof(T));
+  }
+
   //! Saving for POD types to binary
   template<class T> inline
-  typename std::enable_if<std::is_arithmetic<T>::value, void>::type
+  typename std::enable_if<std::is_arithmetic<T>::value && !std::is_same<T, long double>::value, void>::type
   CEREAL_SAVE_FUNCTION_NAME(BinaryOutputArchive & ar, T const & t)
   {
     ar.saveBinary(std::addressof(t), sizeof(t));
