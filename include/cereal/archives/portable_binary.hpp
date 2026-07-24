@@ -32,6 +32,7 @@
 #include "cereal/cereal.hpp"
 #include <sstream>
 #include <limits>
+#include <cstring>
 
 namespace cereal
 {
@@ -261,9 +262,27 @@ namespace cereal
   // ######################################################################
   // Common BinaryArchive serialization functions
 
+  //! Saving long double to portable binary through a zeroed buffer (CVE-2020-11104)
+  /*! See the BinaryOutputArchive overload: long double carries uninitialized
+      padding bytes that would otherwise leak into the archive. Serialize through
+      a zero-initialized buffer so the padding is deterministic zeros. */
+  template<class T> inline
+  typename std::enable_if<std::is_same<T, long double>::value, void>::type
+  CEREAL_SAVE_FUNCTION_NAME(PortableBinaryOutputArchive & ar, T const & t)
+  {
+    static_assert( std::numeric_limits<T>::is_iec559,
+                   "Portable binary only supports IEEE 754 standardized floating point" );
+    // Copy only the significant bytes; the zeroed buffer keeps any trailing padding
+    // (10 significant bytes for 80-bit x86 extended; all of sizeof for double/quad).
+    const std::size_t significant = (std::numeric_limits<T>::digits == 64) ? 10 : sizeof(T);
+    unsigned char buffer[sizeof(T)] = {};
+    std::memcpy(buffer, std::addressof(t), significant);
+    ar.template saveBinary<sizeof(T)>(buffer, sizeof(T));
+  }
+
   //! Saving for POD types to portable binary
   template<class T> inline
-  typename std::enable_if<std::is_arithmetic<T>::value, void>::type
+  typename std::enable_if<std::is_arithmetic<T>::value && !std::is_same<T, long double>::value, void>::type
   CEREAL_SAVE_FUNCTION_NAME(PortableBinaryOutputArchive & ar, T const & t)
   {
     static_assert( !std::is_floating_point<T>::value ||
