@@ -2,7 +2,7 @@ THIRD-PARTY SOFTWARE NOTICES AND INFORMATION
 ============================================================
 
 Project: cereal
-Generated: 2026-07-19
+Generated: 2026-07-25
 Tool: SCANOSS (snippet detection with License dataset)
 Components: 8
 
@@ -29,11 +29,9 @@ COMPONENT ATTRIBUTIONS
   PURL: pkg:github/xmake-mirror/build-artifacts
   Copyright:
     Copyright (C) 2004-2008 Ren   Nyffenegger
-    Copyright (C) 2004-2008 Ren.. Nyffenegger
     Copyright (C) 2006; 2009 Marcin Kalicinski
     Copyright (C) 2015 THL A29 Limited; a Tencent company; and Milo Yip. All rights reserved.
     Copyright (c) 2004-2008 Rene Nyffenegger
-    Copyright (c) 2006; 2009 Marcin Kalicinski
   License: BSD-2-Clause
 
   cereal
@@ -43,13 +41,9 @@ COMPONENT ATTRIBUTIONS
   Copyright:
     Copyright 2013-2022 Randolph Voorhies Shane Grant
     Copyright (C) 2004-2008 Ren   Nyffenegger
-    Copyright (C) 2004-2008 Ren.. Nyffenegger
     Copyright (C) 2015 THL A29 Limited; a Tencent company; and Milo Yip-> All rights reserved->
-    Copyright (C) 2015 THL A29 Limited; a Tencent company; and Milo Yip. All rights reserved.
     Copyright (c) 2006-2013 Alexander Chemeris
     Copyright (c) 2006; 2007 Marcin Kalicinski
-    Copyright (c) 2006; 2007 Marcin Kalicinski.
-    Copyright (c) 2013-2022; Randolph Voorhies; Shane Grant
     Copyright (c) 2014; 2017; Randolph Voorhies; Shane Grant; Juan Pedro
     Copyright (c) 2014; Randolph Voorhies; Shane Grant
     Copyright (c) 2015; Kyle Fleming
@@ -66,7 +60,6 @@ COMPONENT ATTRIBUTIONS
   PURL: pkg:npm/controlr
   Copyright:
     Copyright (c) 2006-2013 Alexander Chemeris
-    Copyright (c) 2006-2013 Alexander Chemeris.
   License: MIT
 
   d2x-xl
@@ -75,7 +68,6 @@ COMPONENT ATTRIBUTIONS
   PURL: pkg:sourceforge/d2x-xl
   Copyright:
     Copyright (C) 2015 THL A29 Limited; a Tencent company; and Milo Yip. All rights reserved.
-    Copyright (C) 2015 THL A29 Limited; a Tencent company; and Milo Yip. All rights reserved..
   License: MIT
 
   doctest
@@ -100,10 +92,7 @@ COMPONENT ATTRIBUTIONS
   PURL: pkg:github/gmlc-tdc/helics
   Copyright:
     Copyright (C) 2006; 2009 Marcin Kalicinski
-    Copyright (C) 2006; 2009 Marcin Kalicinski.
     Copyright (C) 2015 THL A29 Limited; a Tencent company; and Milo Yip. All rights reserved.
-    Copyright (C) 2015 THL A29 Limited; a Tencent company; and Milo Yip. All rights reserved..
-    Copyright (c) 2006; 2009 Marcin Kalicinski
   License: BSD-3-Clause
 
   hesea_lib
